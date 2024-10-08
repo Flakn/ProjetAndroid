@@ -1,65 +1,25 @@
 package com.example.projet_android.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.projet_android.ui.components.headers.MainHeader
-import com.example.projet_android.ui.components.buttons.ValidateButton
-import com.example.projet_android.ui.components.cards.RoundedDarkCard
-import com.example.projet_android.ui.components.inputs.EmailInput
-import com.example.projet_android.ui.components.inputs.PasswordInput
-import com.example.projet_android.ui.components.titles.CardTitle
 import com.example.projet_android.navigation.Screen
+import com.example.projet_android.ui.components.contents.LoginContent
+import com.example.projet_android.ui.components.footers.LoginFooter
+import com.example.projet_android.ui.components.headers.MainHeader
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
 fun LoginScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
     MainHeader(scaffoldPadding)
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(scaffoldPadding),
-        verticalArrangement = Arrangement.Center
-    ) {
-        RoundedDarkCard {
-            CardTitle("Login")
-            Spacer(modifier = Modifier.height(16.dp))
+    LoginContent(scaffoldPadding, "Login", navController)
 
-            EmailInput()
-            Spacer(modifier = Modifier.height(16.dp))
-
-            PasswordInput()
-            Spacer(modifier = Modifier.height(16.dp))
-
-            ValidateButton("Submit")
-        }
-
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(scaffoldPadding),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
-    ) {
-        ValidateButton(text = "Register", color = Color(0xFF6D4C41), onClick = {
-            navController.navigate(Screen.Register.route)
-        })
-    }
+    LoginFooter(scaffoldPadding, "Register", onClick = {
+        navController.navigate(Screen.Register.route)
+    })
 }
 
 @Preview(showBackground = true)

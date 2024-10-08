@@ -11,9 +11,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ValidateButton(text: String, modifier: Modifier = Modifier, color: Color = Color(0xFF00C853), onClick: () -> Unit = {}){
+fun ValidateButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, color: Color = Color(0xFF00C853)){
     Button(
-        onClick = { onClick() },
+        onClick = onClick,
         modifier = modifier
             .padding(vertical = 8.dp),
         colors = ButtonDefaults.buttonColors(color),

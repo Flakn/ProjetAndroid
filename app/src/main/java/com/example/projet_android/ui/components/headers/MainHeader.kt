@@ -12,7 +12,7 @@ import com.example.projet_android.ui.components.titles.ActivityTitle
 @Composable
 fun MainHeader(scaffoldPadding: PaddingValues, modifier: Modifier = Modifier){
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(scaffoldPadding),
         horizontalAlignment = Alignment.CenterHorizontally

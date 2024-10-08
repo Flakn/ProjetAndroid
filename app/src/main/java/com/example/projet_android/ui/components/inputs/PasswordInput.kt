@@ -25,7 +25,7 @@ fun PasswordInput(modifier: Modifier = Modifier) {
     BasicTextField(
         value = password,
         onValueChange = { password = it },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(Color.White, shape = RoundedCornerShape(8.dp))
             .padding(8.dp),

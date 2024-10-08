@@ -1,18 +1,51 @@
 package com.example.projet_android.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.example.projet_android.navigation.Screen
+import androidx.navigation.compose.rememberNavController
+import com.example.projet_android.model.Game
+import com.example.projet_android.ui.components.contents.HomeContent
+import com.example.projet_android.ui.components.footers.HomeFooter
+import com.example.projet_android.ui.components.headers.MainHeader
+import com.example.projet_android.ui.theme.ProjetAndroidTheme
+import java.util.Date
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
-    Button(
-        modifier = Modifier.padding(scaffoldPadding),onClick = { navController.navigate(Screen.Login.route) }) {
-        Text(text = "Go to Login")
+    val gamesAdmin: List<Game> = listOf(
+        Game("Partie 1", Date()),
+        Game("Partie 2", Date()),
+        Game("Partie avec un titre très long qui devrait être tronqué", Date()),
+        Game("Partie 2", Date()),
+        Game("Partie avec un titre très long qui devrait être tronqué", Date())
+    )
+    val gamesPlayer: List<Game> = listOf(
+        Game("Partie 1", Date()),
+        Game("Partie 2", Date()),
+        Game("Partie avec un titre très long qui devrait être tronqué", Date()),
+        Game("Partie 2", Date()),
+        Game("Partie avec un titre très long qui devrait être tronqué", Date()),
+        Game("Partie 2", Date()),
+        Game("Partie avec un titre très long qui devrait être tronqué", Date())
+    )
+
+    MainHeader(scaffoldPadding)
+
+    HomeContent(gamesAdmin, gamesPlayer, scaffoldPadding)
+
+    HomeFooter(scaffoldPadding)
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    ProjetAndroidTheme {
+        HomeScreen(rememberNavController(), PaddingValues())
     }
 }

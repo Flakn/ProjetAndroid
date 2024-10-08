@@ -25,7 +25,7 @@ import com.example.projet_android.navigation.Screen
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun LoginScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
+fun RegisterScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
     MainHeader(scaffoldPadding)
 
     Column(
@@ -35,7 +35,7 @@ fun LoginScreen(navController: NavHostController, scaffoldPadding: PaddingValues
         verticalArrangement = Arrangement.Center
     ) {
         RoundedDarkCard {
-            CardTitle("Login")
+            CardTitle("Register")
             Spacer(modifier = Modifier.height(16.dp))
 
             EmailInput()
@@ -56,16 +56,16 @@ fun LoginScreen(navController: NavHostController, scaffoldPadding: PaddingValues
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
     ) {
-        ValidateButton(text = "Register", color = Color(0xFF6D4C41), onClick = {
-            navController.navigate(Screen.Register.route)
+        ValidateButton(text = "Login", color = Color(0xFF6D4C41), onClick = {
+            navController.navigate(Screen.Login.route)
         })
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
+fun RegisterScreenPreview() {
     ProjetAndroidTheme {
-        LoginScreen(rememberNavController(), PaddingValues())
+        RegisterScreen(rememberNavController(), PaddingValues())
     }
 }

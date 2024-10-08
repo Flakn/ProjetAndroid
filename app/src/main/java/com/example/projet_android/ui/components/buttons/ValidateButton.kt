@@ -1,6 +1,5 @@
-package com.example.projet_android.components.buttons
+package com.example.projet_android.ui.components.buttons
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -12,12 +11,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ValidateButton(text: String, modifier: Modifier = Modifier){
+fun ValidateButton(text: String, modifier: Modifier = Modifier, color: Color = Color(0xFF00C853), onClick: () -> Unit = {}){
     Button(
-        onClick = {  },
+        onClick = { onClick() },
         modifier = modifier
             .padding(vertical = 8.dp),
-        colors = ButtonDefaults.buttonColors(Color(0xFF00C853)),
+        colors = ButtonDefaults.buttonColors(color),
         shape = RoundedCornerShape(8.dp)
     ) {
         Text(text = text, color = Color.White)

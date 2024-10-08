@@ -1,4 +1,4 @@
-package com.example.projet_android.components.cards
+package com.example.projet_android.ui.components.cards
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

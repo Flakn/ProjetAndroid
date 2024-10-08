@@ -1,4 +1,4 @@
-package com.example.projet_android.components.titles
+package com.example.projet_android.ui.components.titles
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding

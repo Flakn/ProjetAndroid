@@ -1,4 +1,4 @@
-package com.example.projet_android.components.inputs
+package com.example.projet_android.ui.components.inputs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,21 +18,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PasswordInput(modifier: Modifier = Modifier) {
-    var password by remember { mutableStateOf("") }
+fun EmailInput(modifier: Modifier = Modifier) {
+    var email by remember { mutableStateOf("") }
 
     BasicTextField(
-        value = password,
-        onValueChange = { password = it },
-        modifier = Modifier
+        value = email,
+        onValueChange = { email = it },
+        modifier = modifier
             .fillMaxWidth()
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .background(Color.White, shape = RoundedCornerShape(10.dp))
             .padding(8.dp),
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         decorationBox = { innerTextField ->
-            if (password.isEmpty()) {
-                Text(text = "Password", color = Color.Gray)
+            if (email.isEmpty()) {
+                Text(text = "Email", color = Color.Gray)
             }
             innerTextField()
         }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projet_android.model.Game
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
-import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -47,14 +47,21 @@ fun GameListItemCard(game: Game, onClick: () -> Unit, modifier: Modifier = Modif
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = game.title,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 10.dp),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            Column(
+                modifier = Modifier.weight(1f),
+            ) {
+                Text(
+                    text = game.title,
+                    modifier = Modifier
+                        .padding(end = 10.dp),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = game.state.replaceFirstChar(Char::titlecase),
+                    color = Color.Gray
+                )
+            }
             Text(
                 text = game.getCreatedDateString(),
                 color = Color.Gray
@@ -68,6 +75,6 @@ fun GameListItemCard(game: Game, onClick: () -> Unit, modifier: Modifier = Modif
 @Composable
 fun GameListItemCardPreview() {
     ProjetAndroidTheme {
-        GameListItemCard(Game("1","Partie 1", Date()), {})
+        GameListItemCard(Game("1", "bfhezrbgherbgherbgjerhbgherbgjerhbgjrehbgerhbh"), {})
     }
 }

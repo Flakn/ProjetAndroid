@@ -18,7 +18,13 @@ import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeContent(gamesAdmin: List<Game>, gamesPlayer: List<Game>, scaffoldPadding: PaddingValues, modifier: Modifier = Modifier){
+fun HomeContent(
+    gamesAdmin: List<Game>,
+    gamesPlayer: List<Game>,
+    onGameClick: (Game) -> Unit,
+    scaffoldPadding: PaddingValues,
+    modifier: Modifier = Modifier
+){
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -26,8 +32,8 @@ fun HomeContent(gamesAdmin: List<Game>, gamesPlayer: List<Game>, scaffoldPadding
             .heightIn(max = 600.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        GameListContent("Admin", gamesAdmin)
-        GameListContent("Player", gamesPlayer)
+        GameListContent("Admin", gamesAdmin, onGameClick = onGameClick)
+        GameListContent("Player", gamesPlayer, onGameClick = onGameClick)
     }
 }
 
@@ -37,19 +43,19 @@ fun HomeContent(gamesAdmin: List<Game>, gamesPlayer: List<Game>, scaffoldPadding
 fun HomeContentPreview() {
     ProjetAndroidTheme {
         val games1: List<Game> = listOf(
-            Game("Partie 1", Date()),
-            Game("Partie 2", Date()),
-            Game("Partie avec un titre très long qui devrait être tronqué", Date()),
-            Game("Partie 2", Date()),
-            Game("Partie avec un titre très long qui devrait être tronqué", Date())
+            Game("1","Partie 1", Date()),
+            Game("2","Partie 2", Date()),
+            Game("3","Partie avec un titre très long qui devrait être tronqué", Date()),
+            Game("4","Partie 2", Date()),
+            Game("5","Partie avec un titre très long qui devrait être tronqué", Date())
         )
         val games2: List<Game> = listOf(
-            Game("Partie 1", Date()),
-            Game("Partie 2", Date()),
-            Game("Partie avec un titre très long qui devrait être tronqué", Date()),
-            Game("Partie 2", Date()),
-            Game("Partie avec un titre très long qui devrait être tronqué", Date())
+            Game("1","Partie 1", Date()),
+            Game("2","Partie 2", Date()),
+            Game("3","Partie avec un titre très long qui devrait être tronqué", Date()),
+            Game("4","Partie 2", Date()),
+            Game("5","Partie avec un titre très long qui devrait être tronqué", Date())
         )
-        HomeContent(games1, games2, PaddingValues())
+        HomeContent(games1, games2, onGameClick = {}, PaddingValues())
     }
 }

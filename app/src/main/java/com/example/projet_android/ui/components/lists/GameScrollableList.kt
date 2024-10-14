@@ -17,13 +17,17 @@ import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun GameScrollableList(games: List<Game>, modifier: Modifier = Modifier){
+fun GameScrollableList(
+    games: List<Game>,
+    onGameClick: (Game) -> Unit,
+    modifier: Modifier = Modifier
+){
     LazyColumn(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
         items(games) { game ->
-            GameListItemCard(game)
+            GameListItemCard(game, onClick = { onGameClick(game) })
         }
     }
 }
@@ -33,7 +37,11 @@ fun GameScrollableList(games: List<Game>, modifier: Modifier = Modifier){
 @Composable
 fun GameScrollableListPreview() {
     ProjetAndroidTheme {
-        val games: List<Game> = listOf(Game("Partie 1", Date()), Game("Partie 2", Date()), Game("Partie 3", Date()))
-        GameScrollableList(games)
+        val games: List<Game> = listOf(
+            Game("1","Partie 1", Date()),
+            Game("2","Partie 2", Date()),
+            Game("3","Partie 3", Date())
+        )
+        GameScrollableList(games, {})
     }
 }

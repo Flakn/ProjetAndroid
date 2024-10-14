@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,13 +25,14 @@ import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun GameListItemCard(game: Game, modifier: Modifier = Modifier) {
+fun GameListItemCard(game: Game, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(5.dp)
             .background(Color.Transparent, shape = RoundedCornerShape(8.dp))
-            .border(2.dp, Color.Gray, RoundedCornerShape(8.dp)),
+            .border(2.dp, Color.Gray, RoundedCornerShape(8.dp))
+            .clickable { onClick() }
     ) {
         Box(
             modifier = Modifier
@@ -66,6 +68,6 @@ fun GameListItemCard(game: Game, modifier: Modifier = Modifier) {
 @Composable
 fun GameListItemCardPreview() {
     ProjetAndroidTheme {
-        GameListItemCard(Game("Partie 1", Date()))
+        GameListItemCard(Game("1","Partie 1", Date()), {})
     }
 }

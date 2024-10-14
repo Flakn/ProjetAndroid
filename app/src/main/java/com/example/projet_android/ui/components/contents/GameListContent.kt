@@ -18,13 +18,19 @@ import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun GameListContent(sectionName: String, games: List<Game>, modifier: Modifier = Modifier){
+fun GameListContent(
+    sectionName: String,
+    games: List<Game>,
+    onGameClick: (Game) -> Unit,
+    modifier: Modifier = Modifier
+){
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
         GameListHeader(sectionName)
         GameScrollableList(
             games,
+            onGameClick = onGameClick,
             Modifier
                 .padding(horizontal = 15.dp)
                 .heightIn(min = 100.dp, max = 300.dp)
@@ -38,12 +44,12 @@ fun GameListContent(sectionName: String, games: List<Game>, modifier: Modifier =
 fun GameListPreview() {
     ProjetAndroidTheme {
         val games: List<Game> = listOf(
-            Game("Partie 1", Date()),
-            Game("Partie 2", Date()),
-            Game("Partie avec un titre très long qui devrait être tronqué", Date()),
-            Game("Partie 2", Date()),
-            Game("Partie avec un titre très long qui devrait être tronqué", Date())
+            Game("1","Partie 1", Date()),
+            Game("2","Partie 2", Date()),
+            Game("3","Partie avec un titre très long qui devrait être tronqué", Date()),
+            Game("4","Partie 2", Date()),
+            Game("5","Partie avec un titre très long qui devrait être tronqué", Date())
         )
-        GameListContent("Admin", games)
+        GameListContent("Admin", games, onGameClick = {})
     }
 }

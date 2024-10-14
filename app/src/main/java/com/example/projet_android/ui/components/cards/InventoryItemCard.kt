@@ -21,13 +21,15 @@ import com.example.projet_android.model.Item
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun InventoryItemCard(item: Item?, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
+fun InventoryItemCard(item: Item?, modifier: Modifier = Modifier, onClick: (Item) -> Unit = {}) {
     Box(
         modifier = modifier
             .size(64.dp)
             .padding(4.dp)
             .background(Color(0xFF474042), shape = RoundedCornerShape(8.dp))
-            .clickable { onClick() },
+            .clickable {
+                if (item != null) onClick(item)
+            },
         contentAlignment = Alignment.Center
     ) {
         if (item != null) {

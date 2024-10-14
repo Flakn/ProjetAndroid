@@ -19,6 +19,7 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 @Composable
 fun InventoryItemsList(
     items: List<Item>,
+    itemOnClick: (Item) -> Unit,
     modifier: Modifier = Modifier
 ){
     Column (modifier = Modifier.background(Color(0xFF6E5C53), shape = RoundedCornerShape(0.dp)))
@@ -31,7 +32,7 @@ fun InventoryItemsList(
                 for (col in 0 until 5) {
                     val index = row * 5 + col
                     val item = if (index < items.size) items[index] else null
-                    InventoryItemCard(item)
+                    InventoryItemCard(item, onClick = itemOnClick)
                 }
             }
         }
@@ -50,6 +51,6 @@ fun InventoryItemsListPreview() {
             Item("5", "Item 5", R.drawable.information.toString()),
             Item("6", "Item 6", R.drawable.information.toString()),
             Item("7", "Item 7", R.drawable.information.toString()),
-        ))
+        ), {})
     }
 }

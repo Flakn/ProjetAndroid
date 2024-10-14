@@ -17,6 +17,7 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 @Composable
 fun InventoryContent(
     inventory: Inventory,
+    itemOnClick: (Item) -> Unit,
     scaffoldPadding: PaddingValues,
     modifier: Modifier = Modifier
 ){
@@ -26,7 +27,7 @@ fun InventoryContent(
             .padding(scaffoldPadding)
     ) {
         SectionHeader("Inventory")
-        InventoryItemsList(inventory.items)
+        InventoryItemsList(inventory.items, itemOnClick = itemOnClick)
     }
 }
 
@@ -44,6 +45,7 @@ fun InventoryContentPreview() {
                     Item("5", "Item 5", R.drawable.information.toString()),
                 )
             ),
+            {},
             PaddingValues()
         )
     }

@@ -1,46 +1,39 @@
 package com.example.projet_android.ui.components.modals
 
- import androidx.compose.foundation.layout.Column
  import androidx.compose.material3.AlertDialog
  import androidx.compose.material3.Text
  import androidx.compose.runtime.Composable
- import androidx.compose.runtime.getValue
- import androidx.compose.runtime.mutableStateOf
- import androidx.compose.runtime.remember
- import androidx.compose.runtime.setValue
  import androidx.compose.ui.tooling.preview.Preview
+ import com.example.projet_android.R
+ import com.example.projet_android.model.Item
  import com.example.projet_android.ui.components.buttons.OutlineButton
  import com.example.projet_android.ui.components.buttons.ValidateButton
- import com.example.projet_android.ui.components.inputs.TextInput
  import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun PlayerNameModal(
+fun ItemInteractModal(
     showDialog: Boolean,
+    item: Item?,
     onDismiss: () -> Unit = {},
-    onConfirm: (String) -> Unit = {}
+    onConfirm: () -> Unit = {}
 ) {
-    var playerName by remember { mutableStateOf("") }
-
     if (showDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
             title = {
-                Text(text = "Enter your player name")
+                Text(text = "Use ${item?.name}")
             },
             text = {
-                Column {
-                    TextInput(playerName, {playerName = it}, "Write your name")
-                }
+                Text(text = "Do you want to use ${item?.name} ?")
             },
             confirmButton = {
-                ValidateButton("Confirm", onClick = {
-                    onConfirm(playerName)
+                ValidateButton("Yes", onClick = {
+                    onConfirm()
                     onDismiss()
                 })
             },
             dismissButton = {
-                OutlineButton("Cancel", onClick = onDismiss)
+                OutlineButton("No", onClick = onDismiss)
             }
         )
     }
@@ -48,8 +41,8 @@ fun PlayerNameModal(
 
 @Preview(showBackground = true)
 @Composable
-fun PlayerNameModalPreview() {
+fun ItemInteractModalPreview() {
     ProjetAndroidTheme {
-        PlayerNameModal(true) { }
+        ItemInteractModal(true, Item("1", "TestItem", R.drawable.bow.toString())) { }
     }
 }

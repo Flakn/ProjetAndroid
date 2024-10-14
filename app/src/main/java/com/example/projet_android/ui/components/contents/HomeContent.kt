@@ -5,9 +5,11 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,8 +34,9 @@ fun HomeContent(
             .heightIn(max = 600.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        GameListContent("Admin", gamesAdmin, onGameClick = onGameClick)
-        GameListContent("Player", gamesPlayer, onGameClick = onGameClick)
+        GameListContent("Parties - Admin", gamesAdmin, onGameClick = onGameClick)
+        Spacer(Modifier.size(20.dp))
+        GameListContent("Parties - Player", gamesPlayer, onGameClick = onGameClick)
     }
 }
 

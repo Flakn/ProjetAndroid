@@ -20,7 +20,7 @@ import com.example.projet_android.ui.components.buttons.ImageButton
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun HomeFooter(navController: NavHostController, scaffoldPadding: PaddingValues, modifier: Modifier = Modifier){
+fun GameFooter(navController: NavHostController, scaffoldPadding: PaddingValues, modifier: Modifier = Modifier){
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -38,16 +38,16 @@ fun HomeFooter(navController: NavHostController, scaffoldPadding: PaddingValues,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
-            ImageButton(R.drawable.user_icon, "Profile icon", onClick = { navController.navigate(Screen.Home.route) })
-            ImageButton(R.drawable.setting_icon, "Settings icon", onClick = { navController.navigate(Screen.Home.route) })
+            ImageButton(R.drawable.arrow_back, "Back icon", onClick = { navController.navigate(Screen.Home.route) })
+            ImageButton(R.drawable.information, "Information icon", onClick = {  })
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HomeFooterPreview() {
+fun GameFooterPreview() {
     ProjetAndroidTheme {
-        HomeFooter(rememberNavController(), PaddingValues())
+        GameFooter(rememberNavController(), PaddingValues())
     }
 }

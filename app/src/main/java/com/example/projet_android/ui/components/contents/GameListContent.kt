@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projet_android.model.Game
-import com.example.projet_android.ui.components.headers.GameListHeader
+import com.example.projet_android.ui.components.headers.SectionHeader
 import com.example.projet_android.ui.components.lists.GameScrollableList
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 import java.util.Date
@@ -27,7 +27,7 @@ fun GameListContent(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        GameListHeader(sectionName)
+        SectionHeader(sectionName, Modifier.padding(horizontal = 15.dp))
         GameScrollableList(
             games,
             onGameClick = onGameClick,

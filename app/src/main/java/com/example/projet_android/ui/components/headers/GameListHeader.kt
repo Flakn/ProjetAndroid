@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,17 +15,16 @@ import androidx.compose.ui.unit.dp
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun GameListHeader(sectionName: String, modifier: Modifier = Modifier){
+fun SectionHeader(sectionName: String, modifier: Modifier = Modifier){
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
             .background(Color(0xFF3E2723))
             .height(56.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Parties - $sectionName",
+            text = sectionName,
             color = Color.White,
             fontWeight = FontWeight.Bold
         )
@@ -37,6 +35,6 @@ fun GameListHeader(sectionName: String, modifier: Modifier = Modifier){
 @Composable
 fun GameListPreview() {
     ProjetAndroidTheme {
-        GameListHeader("Admin")
+        SectionHeader("Parties - Admin")
     }
 }

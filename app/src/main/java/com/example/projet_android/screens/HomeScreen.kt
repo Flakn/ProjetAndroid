@@ -8,13 +8,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projet_android.model.Game
 import com.example.projet_android.navigation.Screen
-import com.example.projet_android.ui.alerts.showShortAlert
 import com.example.projet_android.ui.components.contents.HomeContent
 import com.example.projet_android.ui.components.footers.HomeFooter
 import com.example.projet_android.ui.components.headers.MainHeader
@@ -25,7 +23,7 @@ import java.util.Date
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
-    val context = LocalContext.current
+//    val context = LocalContext.current
 
     var showDialog by remember { mutableStateOf(false) }
     var clickedGame by remember { mutableStateOf<Game?>(null) }
@@ -50,13 +48,11 @@ fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues)
     MainHeader(scaffoldPadding)
 
     HomeContent(gamesAdmin, gamesPlayer, onGameClick = { game ->
-        println(game.id)
         clickedGame = game
-        println(clickedGame?.id)
         showDialog = true
     }, scaffoldPadding)
 
-    HomeFooter(scaffoldPadding)
+    HomeFooter(navController, scaffoldPadding)
 
     PlayerNameModal(
         showDialog = showDialog,
@@ -65,9 +61,9 @@ fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues)
         },
         onConfirm = { playerName ->
             if (playerName.isEmpty()) {
-                showShortAlert(context, "Please enter a valid username")
+//                showShortAlert(context, "Please enter a valid username")
+                navController.navigate("${Screen.Game.route}/test/1")
             } else {
-                println("${Screen.Game.route}/$playerName/${clickedGame?.id}")
                 navController.navigate("${Screen.Game.route}/$playerName/${clickedGame?.id}")
             }
         }

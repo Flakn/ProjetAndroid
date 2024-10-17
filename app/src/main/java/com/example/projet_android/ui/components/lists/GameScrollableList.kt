@@ -26,7 +26,7 @@ fun GameScrollableList(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
-        items(games) { game ->
+        items(games.sortedByDescending { game -> game.createdAt }) { game ->
             GameListItemCard(game, onClick = { onGameClick(game) })
         }
     }

@@ -11,10 +11,18 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.projet_android.model.Game
+import com.example.projet_android.navigation.Screen
+import com.example.projet_android.ui.components.modals.PlayerNameModal
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 import java.util.Date
 
@@ -23,10 +31,17 @@ import java.util.Date
 fun HomeContent(
     gamesAdmin: List<Game>,
     gamesPlayer: List<Game>,
-    onGameClick: (Game) -> Unit,
+    navController: NavHostController,
     scaffoldPadding: PaddingValues,
     modifier: Modifier = Modifier
 ){
+    var showDialog by remember { mutableStateOf(false) }
+    var clickedGame by remember { mutableStateOf<Game?>(null) }
+    val onGameClick: (Game) -> Unit = { game ->
+        clickedGame = game
+        showDialog = true
+    }
+
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -38,6 +53,25 @@ fun HomeContent(
         Spacer(Modifier.size(20.dp))
         GameListContent("Parties - Player", gamesPlayer, onGameClick = onGameClick)
     }
+
+    PlayerNameModal(
+        showDialog = showDialog,
+        onDismiss = {
+            showDialog = false
+        },
+        onConfirm = { playerName ->
+            val route = if (clickedGame!!.isPlayerAdmin) Screen.AdminGame.route else Screen.Game.route
+            if (playerName.isEmpty()) {
+                // TODO: Activate the safety
+//                showShortAlert(context, "Please enter a valid username")
+                val playerNameRoute = if (clickedGame!!.isPlayerAdmin) "" else "/test"
+                navController.navigate("$route$playerNameRoute/1")
+            } else {
+                val playerNameRoute = if (clickedGame!!.isPlayerAdmin) "" else "/$playerName"
+                navController.navigate("$route$playerNameRoute/${clickedGame!!.id}")
+            }
+        }
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -59,6 +93,6 @@ fun HomeContentPreview() {
             Game("4","Partie 2", Date()),
             Game("5","Partie avec un titre très long qui devrait être tronqué", Date())
         )
-        HomeContent(games1, games2, onGameClick = {}, PaddingValues())
+        HomeContent(games1, games2, rememberNavController(), PaddingValues())
     }
 }

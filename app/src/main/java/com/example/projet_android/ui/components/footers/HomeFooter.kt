@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,10 +21,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.projet_android.R
 import com.example.projet_android.navigation.Screen
 import com.example.projet_android.ui.components.buttons.ImageButton
+import com.example.projet_android.ui.components.modals.AddGameModal
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun HomeFooter(navController: NavHostController, scaffoldPadding: PaddingValues, modifier: Modifier = Modifier){
+fun HomeFooter(onGameAdd: (String) -> Unit, navController: NavHostController, scaffoldPadding: PaddingValues, modifier: Modifier = Modifier){
+    var showDialog by remember { mutableStateOf(false) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -38,16 +45,33 @@ fun HomeFooter(navController: NavHostController, scaffoldPadding: PaddingValues,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
-            ImageButton(R.drawable.user_icon, "Profile icon", onClick = { navController.navigate(Screen.Home.route) })
-            ImageButton(R.drawable.setting_icon, "Settings icon", onClick = { navController.navigate(Screen.Home.route) })
+            ImageButton(
+                R.drawable.logout,
+                "Logout icon",
+                onClick = {
+                    // TODO: Logout the user
+                    navController.navigate(Screen.Login.route)
+                }
+            )
+            ImageButton(
+                R.drawable.add,
+                "Add icon",
+                onClick = { showDialog = true }
+            )
         }
     }
+
+    AddGameModal(
+        showDialog,
+        onConfirm = onGameAdd,
+        onDismiss = { showDialog = false }
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun HomeFooterPreview() {
     ProjetAndroidTheme {
-        HomeFooter(rememberNavController(), PaddingValues())
+        HomeFooter({}, rememberNavController(), PaddingValues())
     }
 }

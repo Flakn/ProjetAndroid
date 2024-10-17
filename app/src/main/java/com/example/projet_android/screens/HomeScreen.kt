@@ -12,11 +12,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projet_android.model.Game
-import com.example.projet_android.navigation.Screen
 import com.example.projet_android.ui.components.contents.HomeContent
 import com.example.projet_android.ui.components.footers.HomeFooter
 import com.example.projet_android.ui.components.headers.MainHeader
-import com.example.projet_android.ui.components.modals.PlayerNameModal
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 import java.util.Date
 
@@ -25,16 +23,13 @@ import java.util.Date
 fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
 //    val context = LocalContext.current
 
-    var showDialog by remember { mutableStateOf(false) }
-    var clickedGame by remember { mutableStateOf<Game?>(null) }
-
-    val gamesAdmin: List<Game> = listOf(
+    var gamesAdmin by remember { mutableStateOf(listOf(
         Game("1","Partie 1", Date(), isPlayerAdmin = true),
         Game("2","Partie 2", Date(), isPlayerAdmin = true),
         Game("3","Partie avec un titre très long qui devrait être tronqué", Date(), isPlayerAdmin = true),
         Game("4","Partie 2", Date(), isPlayerAdmin = true),
         Game("5","Partie avec un titre très long qui devrait être tronqué", Date(), isPlayerAdmin = true)
-    )
+    )) }
     val gamesPlayer: List<Game> = listOf(
         Game("1","Partie 1", Date()),
         Game("2","Partie 2", Date()),
@@ -47,29 +42,15 @@ fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues)
 
     MainHeader(scaffoldPadding)
 
-    HomeContent(gamesAdmin, gamesPlayer, onGameClick = { game ->
-        clickedGame = game
-        showDialog = true
-    }, scaffoldPadding)
+    HomeContent(gamesAdmin, gamesPlayer, navController, scaffoldPadding)
 
-    HomeFooter(navController, scaffoldPadding)
-
-    PlayerNameModal(
-        showDialog = showDialog,
-        onDismiss = {
-            showDialog = false
+    HomeFooter(
+        onGameAdd = { gameTitle ->
+            // TODO: Create the game
+            gamesAdmin += Game("1", gameTitle)
         },
-        onConfirm = { playerName ->
-            val route = if (clickedGame!!.isPlayerAdmin) Screen.AdminGame.route else Screen.Game.route
-            if (playerName.isEmpty()) {
-//                showShortAlert(context, "Please enter a valid username")
-                val playerNameRoute = if (clickedGame!!.isPlayerAdmin) "" else "/test"
-                navController.navigate("$route$playerNameRoute/1")
-            } else {
-                val playerNameRoute = if (clickedGame!!.isPlayerAdmin) "" else "/$playerName"
-                navController.navigate("$route$playerNameRoute/${clickedGame!!.id}")
-            }
-        }
+        navController,
+        scaffoldPadding
     )
 }
 

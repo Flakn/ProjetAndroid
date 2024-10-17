@@ -9,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.projet_android.screens.AdminGameScreen
 import com.example.projet_android.screens.GameScreen
 import com.example.projet_android.screens.LoginScreen
 import com.example.projet_android.screens.HomeScreen
@@ -42,6 +43,21 @@ fun NavGraph(navController: NavHostController, scaffoldPadding: PaddingValues) {
                 }
             } else {
                 GameScreen(username, gameId, navController, scaffoldPadding)
+            }
+        }
+        composable(
+            route = "${Screen.AdminGame.route}/{game_id}",
+            arguments = listOf(
+                navArgument("game_id") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val gameId = backStackEntry.arguments?.getString("game_id")
+
+            if (gameId.isNullOrEmpty()) {
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(Screen.Home.route) { inclusive = true }
+                }
+            } else {
+                AdminGameScreen(gameId, navController, scaffoldPadding)
             }
         }
     }

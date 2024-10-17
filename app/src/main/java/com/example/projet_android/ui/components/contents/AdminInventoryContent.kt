@@ -14,26 +14,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.projet_android.R
 import com.example.projet_android.model.Inventory
 import com.example.projet_android.model.Item
-import com.example.projet_android.ui.components.headers.SectionHeader
+import com.example.projet_android.model.Player
+import com.example.projet_android.ui.components.headers.AdminInventoryHeader
 import com.example.projet_android.ui.components.lists.InventoryItemsList
-import com.example.projet_android.ui.components.modals.ItemInteractModal
+import com.example.projet_android.ui.components.modals.ItemInfoModal
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun InventoryContent(
-    inventory: Inventory,
+fun AdminInventoryContent(
+    players: List<Player>,
     scaffoldPadding: PaddingValues,
     modifier: Modifier = Modifier
 ){
     var showDialog by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf<Item?>(null) }
+    var inventory by remember { mutableStateOf(players[0].inventory) }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(scaffoldPadding)
     ) {
-        SectionHeader("Inventory")
+        AdminInventoryHeader(
+            players,
+            { player -> inventory = player.inventory }
+        )
         InventoryItemsList(
             inventory.items,
             itemOnClick = { item ->
@@ -43,32 +48,23 @@ fun InventoryContent(
         )
     }
 
-    ItemInteractModal(
+    ItemInfoModal(
         showDialog,
         selectedItem,
         onDismiss = { showDialog = false },
-        onConfirm = {
-            // TODO: Use the item with API
-            println(selectedItem?.name)
-        }
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun InventoryContentPreview() {
+fun AdminInventoryContentPreview() {
     ProjetAndroidTheme {
-        InventoryContent(
-            Inventory(
-                items = listOf(
-                    Item("1", "Item 1", R.drawable.information.toString()),
-                    Item("2", "Item 2", R.drawable.information.toString()),
-                    Item("3", "Item 3", R.drawable.information.toString()),
-                    Item("4", "Item 4", R.drawable.information.toString()),
-                    Item("5", "Item 5", R.drawable.information.toString()),
-                )
-            ),
-            PaddingValues()
+        val players = listOf(
+            Player("1", "Player 1", Inventory(listOf(Item("1", "Item 1", R.drawable.bow.toString())))),
+            Player("2", "Player 2", Inventory(listOf(Item("2", "Item 2", R.drawable.axe.toString())))),
+            Player("3", "Player 3", Inventory(listOf(Item("3", "Item 3", R.drawable.crossbow.toString())))),
+            Player("4", "Player 4", Inventory(listOf(Item("4", "Item 4", R.drawable.diamond.toString()))))
         )
+        AdminInventoryContent(players, PaddingValues())
     }
 }

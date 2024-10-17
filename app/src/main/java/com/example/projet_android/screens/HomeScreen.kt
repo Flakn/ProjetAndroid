@@ -29,11 +29,11 @@ fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues)
     var clickedGame by remember { mutableStateOf<Game?>(null) }
 
     val gamesAdmin: List<Game> = listOf(
-        Game("1","Partie 1", Date()),
-        Game("2","Partie 2", Date()),
-        Game("3","Partie avec un titre très long qui devrait être tronqué", Date()),
-        Game("4","Partie 2", Date()),
-        Game("5","Partie avec un titre très long qui devrait être tronqué", Date())
+        Game("1","Partie 1", Date(), isPlayerAdmin = true),
+        Game("2","Partie 2", Date(), isPlayerAdmin = true),
+        Game("3","Partie avec un titre très long qui devrait être tronqué", Date(), isPlayerAdmin = true),
+        Game("4","Partie 2", Date(), isPlayerAdmin = true),
+        Game("5","Partie avec un titre très long qui devrait être tronqué", Date(), isPlayerAdmin = true)
     )
     val gamesPlayer: List<Game> = listOf(
         Game("1","Partie 1", Date()),
@@ -60,11 +60,14 @@ fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues)
             showDialog = false
         },
         onConfirm = { playerName ->
+            val route = if (clickedGame!!.isPlayerAdmin) Screen.AdminGame.route else Screen.Game.route
             if (playerName.isEmpty()) {
 //                showShortAlert(context, "Please enter a valid username")
-                navController.navigate("${Screen.Game.route}/test/1")
+                val playerNameRoute = if (clickedGame!!.isPlayerAdmin) "" else "/test"
+                navController.navigate("$route$playerNameRoute/1")
             } else {
-                navController.navigate("${Screen.Game.route}/$playerName/${clickedGame?.id}")
+                val playerNameRoute = if (clickedGame!!.isPlayerAdmin) "" else "/$playerName"
+                navController.navigate("$route$playerNameRoute/${clickedGame!!.id}")
             }
         }
     )

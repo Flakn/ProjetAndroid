@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projet_android.navigation.PreferencesHelper
 import com.example.projet_android.repositories.AuthRepository
-import com.example.projet_android.view_models.states.LoginState
+import com.example.projet_android.view_models.states.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,30 +16,32 @@ class AuthViewModel @Inject constructor(
     private val preferencesHelper: PreferencesHelper
 ) : ViewModel() {
 
-    private val _loginState = MutableLiveData<LoginState?>()
-    val loginState: MutableLiveData<LoginState?> = _loginState
+    private val _loginState = MutableLiveData<RequestState?>()
+    val loginState: MutableLiveData<RequestState?> = _loginState
 
     fun register(username: String, email: String, password: String) {
         viewModelScope.launch {
+            _loginState.value = RequestState.Loading
             try {
                 authRepository.register(username, email, password)
                 login(email, password)
             } catch (e: Exception) {
                 e.printStackTrace()
-                _loginState.postValue(LoginState.Error("Register failed"))
+                _loginState.postValue(RequestState.Error("Register failed"))
             }
         }
     }
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
+            _loginState.value = RequestState.Loading
             try {
                 val token = authRepository.login(email, password)
                 preferencesHelper.saveToken(token)
-                _loginState.postValue(LoginState.Success(token))
+                _loginState.postValue(RequestState.Success(token))
             } catch (e: Exception) {
                 e.printStackTrace()
-                _loginState.postValue(LoginState.Error("Login failed"))
+                _loginState.postValue(RequestState.Error("Login failed"))
             }
         }
     }

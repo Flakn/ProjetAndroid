@@ -30,7 +30,7 @@ import com.example.projet_android.ui.components.inputs.TextInput
 import com.example.projet_android.ui.components.titles.CardTitle
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 import com.example.projet_android.view_models.AuthViewModel
-import com.example.projet_android.view_models.states.LoginState
+import com.example.projet_android.view_models.states.RequestState
 
 @Composable
 fun RegisterContent(scaffoldPadding: PaddingValues, navController: NavHostController, modifier: Modifier = Modifier){
@@ -60,23 +60,29 @@ fun RegisterContent(scaffoldPadding: PaddingValues, navController: NavHostContro
             PasswordInput(password, { password = it })
             Spacer(modifier = Modifier.height(16.dp))
 
-            ValidateButton("Submit", onClick = { authViewModel.register(username, email, password) })
+            ValidateButton(
+                "Submit",
+                onClick = { authViewModel.register(username, email, password) },
+                isLoading = loginState is RequestState.Loading
+            )
         }
     }
 
     loginState?.let { state ->
         when (state) {
-            is LoginState.Success -> {
+            is RequestState.Success<*> -> {
                 authViewModel.resetLoginState()
                 navController.navigate(Screen.Home.route) {
                     popUpTo(0)
                     launchSingleTop = true
                 }
             }
-            is LoginState.Error -> {
+            is RequestState.Error -> {
                 authViewModel.resetLoginState()
                 showShortAlert(LocalContext.current, state.message)
             }
+
+            else -> {}
         }
     }
 }

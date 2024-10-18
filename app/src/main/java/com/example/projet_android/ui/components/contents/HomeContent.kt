@@ -67,9 +67,9 @@ fun HomeContent(
             if (playerName.isEmpty()) {
                 // TODO: Activate the safety
 //                showShortAlert(context, "Please enter a valid username")
-                navController.navigate("${Screen.Game.route}/test/1")
+                navController.navigate("${Screen.Game.route}/1")
             } else {
-                navController.navigate("${Screen.Game.route}/$playerName/${clickedGame!!.id}")
+                navController.navigate("${Screen.Game.route}/${clickedGame!!.id}")
             }
         }
     )

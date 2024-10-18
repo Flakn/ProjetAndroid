@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projet_android.R
@@ -23,9 +24,12 @@ import com.example.projet_android.navigation.Screen
 import com.example.projet_android.ui.components.buttons.ImageButton
 import com.example.projet_android.ui.components.modals.AddGameModal
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
+import com.example.projet_android.view_models.AuthViewModel
 
 @Composable
 fun HomeFooter(onGameAdd: (String) -> Unit, navController: NavHostController, scaffoldPadding: PaddingValues, modifier: Modifier = Modifier){
+    val authViewModel: AuthViewModel = hiltViewModel()
+
     var showDialog by remember { mutableStateOf(false) }
 
     Column(
@@ -49,8 +53,11 @@ fun HomeFooter(onGameAdd: (String) -> Unit, navController: NavHostController, sc
                 R.drawable.logout,
                 "Logout icon",
                 onClick = {
-                    // TODO: Logout the user
-                    navController.navigate(Screen.Login.route)
+                    authViewModel.logout()
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(0)
+                        launchSingleTop = true
+                    }
                 }
             )
             ImageButton(

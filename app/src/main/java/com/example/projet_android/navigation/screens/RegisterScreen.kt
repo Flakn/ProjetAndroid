@@ -1,4 +1,4 @@
-package com.example.projet_android.screens
+package com.example.projet_android.navigation.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -6,26 +6,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projet_android.navigation.Screen
-import com.example.projet_android.ui.components.contents.LoginContent
+import com.example.projet_android.ui.components.contents.RegisterContent
 import com.example.projet_android.ui.components.footers.LoginFooter
 import com.example.projet_android.ui.components.headers.MainHeader
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun LoginScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
+fun RegisterScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
     MainHeader(scaffoldPadding)
 
-    LoginContent(scaffoldPadding, "Login", navController)
+    RegisterContent(scaffoldPadding, navController)
 
-    LoginFooter(scaffoldPadding, "Register", onClick = {
-        navController.navigate(Screen.Register.route)
+    LoginFooter(scaffoldPadding, "Login", onClick = {
+        navController.navigate(Screen.Login.route)
     })
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
+fun RegisterScreenPreview() {
     ProjetAndroidTheme {
-        LoginScreen(rememberNavController(), PaddingValues())
+        RegisterScreen(rememberNavController(), PaddingValues())
     }
 }

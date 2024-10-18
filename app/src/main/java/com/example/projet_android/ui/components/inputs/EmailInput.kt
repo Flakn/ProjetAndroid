@@ -8,22 +8,16 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmailInput(modifier: Modifier = Modifier) {
-    var email by remember { mutableStateOf("") }
-
+fun EmailInput(email: String, onEmailChange: (String) -> Unit, modifier: Modifier = Modifier) {
     BasicTextField(
         value = email,
-        onValueChange = { email = it },
+        onValueChange = onEmailChange,
         modifier = modifier
             .fillMaxWidth()
             .background(Color.White, shape = RoundedCornerShape(10.dp))

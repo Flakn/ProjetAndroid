@@ -26,16 +26,18 @@ import com.example.projet_android.ui.components.buttons.ValidateButton
 import com.example.projet_android.ui.components.cards.RoundedDarkCard
 import com.example.projet_android.ui.components.inputs.EmailInput
 import com.example.projet_android.ui.components.inputs.PasswordInput
+import com.example.projet_android.ui.components.inputs.TextInput
 import com.example.projet_android.ui.components.titles.CardTitle
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 import com.example.projet_android.view_models.AuthViewModel
 import com.example.projet_android.view_models.states.LoginState
 
 @Composable
-fun LoginContent(scaffoldPadding: PaddingValues, navController: NavHostController, modifier: Modifier = Modifier){
+fun RegisterContent(scaffoldPadding: PaddingValues, navController: NavHostController, modifier: Modifier = Modifier){
     val authViewModel: AuthViewModel = hiltViewModel()
     val loginState by authViewModel.loginState.observeAsState()
 
+    var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -46,7 +48,10 @@ fun LoginContent(scaffoldPadding: PaddingValues, navController: NavHostControlle
         verticalArrangement = Arrangement.Center
     ) {
         RoundedDarkCard {
-            CardTitle("Login")
+            CardTitle("Register")
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TextInput(username, { username = it }, "Username")
             Spacer(modifier = Modifier.height(16.dp))
 
             EmailInput(email, { email = it })
@@ -55,7 +60,7 @@ fun LoginContent(scaffoldPadding: PaddingValues, navController: NavHostControlle
             PasswordInput(password, { password = it })
             Spacer(modifier = Modifier.height(16.dp))
 
-            ValidateButton("Submit", onClick = { authViewModel.login(email, password) })
+            ValidateButton("Submit", onClick = { authViewModel.register(username, email, password) })
         }
     }
 
@@ -78,8 +83,8 @@ fun LoginContent(scaffoldPadding: PaddingValues, navController: NavHostControlle
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPreview() {
+fun RegisterPreview() {
     ProjetAndroidTheme {
-        LoginContent(PaddingValues(), rememberNavController())
+        RegisterContent(PaddingValues(), rememberNavController())
     }
 }

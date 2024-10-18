@@ -1,4 +1,4 @@
-package com.example.projet_android.screens
+package com.example.projet_android.navigation.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable

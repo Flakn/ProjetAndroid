@@ -1,4 +1,4 @@
-package com.example.projet_android.screens
+package com.example.projet_android.navigation.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -21,8 +21,6 @@ import java.util.Date
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
-//    val context = LocalContext.current
-
     var gamesAdmin by remember { mutableStateOf(listOf(
         Game("1","Partie 1", Date(), isPlayerAdmin = true),
         Game("2","Partie 2", Date(), isPlayerAdmin = true),

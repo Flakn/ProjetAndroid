@@ -1,4 +1,4 @@
-package com.example.projet_android.screens
+package com.example.projet_android.navigation.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -12,20 +12,20 @@ import com.example.projet_android.ui.components.headers.MainHeader
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun RegisterScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
+fun LoginScreen(navController: NavHostController, scaffoldPadding: PaddingValues) {
     MainHeader(scaffoldPadding)
 
-    LoginContent(scaffoldPadding, "Register", navController)
+    LoginContent(scaffoldPadding, navController)
 
-    LoginFooter(scaffoldPadding, "Login", onClick = {
-        navController.navigate(Screen.Login.route)
+    LoginFooter(scaffoldPadding, "Register", onClick = {
+        navController.navigate(Screen.Register.route)
     })
 }
 
 @Preview(showBackground = true)
 @Composable
-fun RegisterScreenPreview() {
+fun LoginScreenPreview() {
     ProjetAndroidTheme {
-        RegisterScreen(rememberNavController(), PaddingValues())
+        LoginScreen(rememberNavController(), PaddingValues())
     }
 }

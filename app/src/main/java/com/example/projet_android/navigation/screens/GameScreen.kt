@@ -1,4 +1,4 @@
-package com.example.projet_android.screens
+package com.example.projet_android.navigation.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -17,7 +17,8 @@ import com.example.projet_android.ui.components.headers.MainHeader
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun GameScreen(username: String, gameId: String, navController: NavHostController, scaffoldPadding: PaddingValues) {
+fun GameScreen(gameId: String, navController: NavHostController, scaffoldPadding: PaddingValues) {
+    val username = "TestUsername"
     val inventory = Inventory(
         items = listOf(
             Item("1", "Item 1", R.drawable.armor1.toString()),
@@ -55,7 +56,6 @@ fun GameScreen(username: String, gameId: String, navController: NavHostControlle
 fun GameScreenPreview() {
     ProjetAndroidTheme {
         GameScreen(
-            "TestUsername",
             "1",
             rememberNavController(),
             PaddingValues()

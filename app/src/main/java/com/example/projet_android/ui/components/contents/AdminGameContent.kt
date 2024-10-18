@@ -35,6 +35,8 @@ fun AdminGameContent(game: Game, scaffoldPadding: PaddingValues, modifier: Modif
         Player("4", "Player 4", Inventory(listOf(Item("4", "Item 4", R.drawable.diamond.toString()))))
     )) }
 
+    var selectedPlayer by remember { mutableStateOf(players[0]) }
+
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -47,10 +49,18 @@ fun AdminGameContent(game: Game, scaffoldPadding: PaddingValues, modifier: Modif
             addPlayer = { players += it },
             removePlayer = { playerToRemove ->
                 players = players.filter { it != playerToRemove }
+                if (playerToRemove.id == selectedPlayer.id)
+                    selectedPlayer = players[0]
             }
         )
         Spacer(modifier = Modifier.height(10.dp))
-        AdminInventoryContent(players, scaffoldPadding, Modifier.padding(horizontal = 10.dp))
+        AdminInventoryContent(
+            players,
+            selectedPlayer,
+            onPlayerChange = { selectedPlayer = it },
+            scaffoldPadding,
+            Modifier.padding(horizontal = 10.dp)
+        )
     }
 }
 

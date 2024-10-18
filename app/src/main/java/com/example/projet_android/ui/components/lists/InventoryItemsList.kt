@@ -20,8 +20,11 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 fun InventoryItemsList(
     items: List<Item>,
     itemOnClick: (Item) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isPlayerAdmin: Boolean = false
 ){
+    val itemsToDisplay = if (isPlayerAdmin) items + Item("ADD", "ADD", R.drawable.add.toString()) else items
+
     Column (modifier = Modifier.background(Color(0xFF6E5C53), shape = RoundedCornerShape(0.dp)))
     {
         for (row in 0 until 4) {
@@ -31,7 +34,7 @@ fun InventoryItemsList(
             ) {
                 for (col in 0 until 5) {
                     val index = row * 5 + col
-                    val item = if (index < items.size) items[index] else null
+                    val item = if (index < itemsToDisplay.size) itemsToDisplay[index] else null
                     InventoryItemCard(item, onClick = itemOnClick)
                 }
             }
@@ -43,14 +46,18 @@ fun InventoryItemsList(
 @Composable
 fun InventoryItemsListPreview() {
     ProjetAndroidTheme {
-        InventoryItemsList(items = listOf(
-            Item("1", "Item 1", R.drawable.information.toString()),
-            Item("2", "Item 2", R.drawable.information.toString()),
-            Item("3", "Item 3", R.drawable.information.toString()),
-            Item("4", "Item 4", R.drawable.information.toString()),
-            Item("5", "Item 5", R.drawable.information.toString()),
-            Item("6", "Item 6", R.drawable.information.toString()),
-            Item("7", "Item 7", R.drawable.information.toString()),
-        ), {})
+        InventoryItemsList(
+            items = listOf(
+                Item("1", "Item 1", R.drawable.information.toString()),
+                Item("2", "Item 2", R.drawable.information.toString()),
+                Item("3", "Item 3", R.drawable.information.toString()),
+                Item("4", "Item 4", R.drawable.information.toString()),
+                Item("5", "Item 5", R.drawable.information.toString()),
+                Item("6", "Item 6", R.drawable.information.toString()),
+                Item("7", "Item 7", R.drawable.information.toString()),
+            ),
+            {},
+            isPlayerAdmin = true
+        )
     }
 }

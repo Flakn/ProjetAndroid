@@ -18,40 +18,51 @@ import com.example.projet_android.model.Player
 import com.example.projet_android.ui.components.headers.AdminInventoryHeader
 import com.example.projet_android.ui.components.lists.InventoryItemsList
 import com.example.projet_android.ui.components.modals.ItemInfoModal
+import com.example.projet_android.ui.components.modals.SelectItemModal
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
 fun AdminInventoryContent(
     players: List<Player>,
+    selectedPlayer: Player,
+    onPlayerChange: (Player) -> Unit,
     scaffoldPadding: PaddingValues,
     modifier: Modifier = Modifier
 ){
-    var showDialog by remember { mutableStateOf(false) }
+    var showInfoDialog by remember { mutableStateOf(false) }
+    var showAddItemDialog by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf<Item?>(null) }
-    var inventory by remember { mutableStateOf(players[0].inventory) }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(scaffoldPadding)
     ) {
-        AdminInventoryHeader(
-            players,
-            { player -> inventory = player.inventory }
-        )
+        AdminInventoryHeader(players, selectedPlayer, onPlayerChange)
         InventoryItemsList(
-            inventory.items,
+            selectedPlayer.inventory.items,
             itemOnClick = { item ->
-                showDialog = true
-                selectedItem = item
-            }
+                if (item.id != "ADD") {
+                    showInfoDialog = true
+                    selectedItem = item
+                } else {
+                    showAddItemDialog = true
+                }
+            },
+            isPlayerAdmin = true
         )
     }
 
     ItemInfoModal(
-        showDialog,
+        showInfoDialog,
         selectedItem,
-        onDismiss = { showDialog = false },
+        onDismiss = { showInfoDialog = false },
+    )
+
+    SelectItemModal(
+        showAddItemDialog,
+        onDismiss = { showAddItemDialog = false },
+        onConfirm = { selectedPlayer.inventory.items += it }
     )
 }
 
@@ -65,6 +76,6 @@ fun AdminInventoryContentPreview() {
             Player("3", "Player 3", Inventory(listOf(Item("3", "Item 3", R.drawable.crossbow.toString())))),
             Player("4", "Player 4", Inventory(listOf(Item("4", "Item 4", R.drawable.diamond.toString()))))
         )
-        AdminInventoryContent(players, PaddingValues())
+        AdminInventoryContent(players, players[0], {}, PaddingValues())
     }
 }

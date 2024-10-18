@@ -39,7 +39,6 @@ fun GameFooter(navController: NavHostController, scaffoldPadding: PaddingValues,
             verticalAlignment = Alignment.Bottom
         ) {
             ImageButton(R.drawable.arrow_back, "Back icon", onClick = { navController.navigate(Screen.Home.route) })
-            ImageButton(R.drawable.information, "Information icon", onClick = {  })
         }
     }
 }

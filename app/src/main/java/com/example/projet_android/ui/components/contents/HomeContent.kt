@@ -38,8 +38,12 @@ fun HomeContent(
     var showDialog by remember { mutableStateOf(false) }
     var clickedGame by remember { mutableStateOf<Game?>(null) }
     val onGameClick: (Game) -> Unit = { game ->
-        clickedGame = game
-        showDialog = true
+        if (game.isPlayerAdmin) {
+            navController.navigate("${Screen.AdminGame.route}/${game.id}")
+        } else {
+            clickedGame = game
+            showDialog = true
+        }
     }
 
     Column (
@@ -60,15 +64,12 @@ fun HomeContent(
             showDialog = false
         },
         onConfirm = { playerName ->
-            val route = if (clickedGame!!.isPlayerAdmin) Screen.AdminGame.route else Screen.Game.route
             if (playerName.isEmpty()) {
                 // TODO: Activate the safety
 //                showShortAlert(context, "Please enter a valid username")
-                val playerNameRoute = if (clickedGame!!.isPlayerAdmin) "" else "/test"
-                navController.navigate("$route$playerNameRoute/1")
+                navController.navigate("${Screen.Game.route}/test/1")
             } else {
-                val playerNameRoute = if (clickedGame!!.isPlayerAdmin) "" else "/$playerName"
-                navController.navigate("$route$playerNameRoute/${clickedGame!!.id}")
+                navController.navigate("${Screen.Game.route}/$playerName/${clickedGame!!.id}")
             }
         }
     )

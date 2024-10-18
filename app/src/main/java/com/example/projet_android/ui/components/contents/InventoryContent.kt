@@ -39,7 +39,8 @@ fun InventoryContent(
             itemOnClick = { item ->
                 showDialog = true
                 selectedItem = item
-            }
+            },
+            isPlayerAdmin = true
         )
     }
 

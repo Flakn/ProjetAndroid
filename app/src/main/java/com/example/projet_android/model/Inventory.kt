@@ -1,3 +1,3 @@
 package com.example.projet_android.model
 
-data class Inventory(val items: List<Item> = listOf()) {}
+data class Inventory(var items: List<Item> = listOf())

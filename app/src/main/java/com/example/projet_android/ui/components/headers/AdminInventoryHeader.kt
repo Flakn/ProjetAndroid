@@ -30,9 +30,8 @@ import com.example.projet_android.ui.components.modals.SelectPlayerModal
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun AdminInventoryHeader(players: List<Player>, onPlayerChange: (Player) -> Unit, modifier: Modifier = Modifier){
+fun AdminInventoryHeader(players: List<Player>, selectedPlayer: Player, onPlayerChange: (Player) -> Unit, modifier: Modifier = Modifier){
     var showDialog by remember { mutableStateOf(false) }
-    var selectedPlayer by remember { mutableStateOf(players[0].name) }
 
     Row(
         modifier = modifier
@@ -44,7 +43,7 @@ fun AdminInventoryHeader(players: List<Player>, onPlayerChange: (Player) -> Unit
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Inventory - $selectedPlayer",
+            text = "Inventory - ${selectedPlayer.name}",
             color = Color.White,
             fontWeight = FontWeight.Bold
         )
@@ -61,10 +60,7 @@ fun AdminInventoryHeader(players: List<Player>, onPlayerChange: (Player) -> Unit
         showDialog,
         players,
         onDismiss = { showDialog = false },
-        onConfirm = { player ->
-            selectedPlayer = player.name
-            onPlayerChange(player)
-        }
+        onConfirm = onPlayerChange
     )
 }
 
@@ -78,6 +74,6 @@ fun InventoryHeaderPreview() {
             Player("3", "Player 3", Inventory(listOf(Item("3", "Item 3", R.drawable.crossbow.toString())))),
             Player("4", "Player 4", Inventory(listOf(Item("4", "Item 4", R.drawable.diamond.toString()))))
         )
-        AdminInventoryHeader(players, {})
+        AdminInventoryHeader(players, players[0], {})
     }
 }

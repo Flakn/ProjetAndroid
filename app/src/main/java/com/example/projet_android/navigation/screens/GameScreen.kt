@@ -19,6 +19,8 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 @Composable
 fun GameScreen(gameId: String, navController: NavHostController, scaffoldPadding: PaddingValues) {
     val username = "TestUsername"
+
+    // TODO: Get the current player
     val inventory = Inventory(
         items = listOf(
             Item("1", "Item 1", R.drawable.armor1.toString()),
@@ -36,6 +38,8 @@ fun GameScreen(gameId: String, navController: NavHostController, scaffoldPadding
         username,
         inventory
     )
+
+    // TODO: Get the game by the ID
     val game = Game(
         gameId,
         "Partie 1",
@@ -44,7 +48,7 @@ fun GameScreen(gameId: String, navController: NavHostController, scaffoldPadding
                 "Lorem ipsum odor amet, consectetuer adipiscing elit. Finibus blandit interdum pulvinar non nostra imperdiet ut fusce. Nam egestas primis litora taciti penatibus"
     )
 
-    MainHeader(scaffoldPadding, text = "${stringResource(R.string.app_name)} - $gameId")
+    MainHeader(scaffoldPadding, text = "${stringResource(R.string.app_name)} - ${game.name}")
 
     GameContent(player, game, scaffoldPadding)
 

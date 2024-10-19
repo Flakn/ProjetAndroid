@@ -15,12 +15,13 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
 fun AdminGameScreen(gameId: String, navController: NavHostController, scaffoldPadding: PaddingValues) {
+    // TODO: Get the current game
     val game = Game(
         gameId,
         "Partie 1",
     )
 
-    MainHeader(scaffoldPadding, text = "${stringResource(R.string.app_name)} - $gameId")
+    MainHeader(scaffoldPadding, text = "${stringResource(R.string.app_name)} - ${game.name}")
 
     AdminGameContent(game, scaffoldPadding)
 

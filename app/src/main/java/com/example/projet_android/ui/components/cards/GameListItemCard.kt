@@ -51,14 +51,14 @@ fun GameListItemCard(game: Game, onClick: () -> Unit, modifier: Modifier = Modif
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
-                    text = game.title,
+                    text = game.name,
                     modifier = Modifier
                         .padding(end = 10.dp),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = game.state.replaceFirstChar(Char::titlecase),
+                    text = game.status.lowercase().replaceFirstChar(Char::titlecase),
                     color = Color.Gray
                 )
             }

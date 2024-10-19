@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.example.projet_android.model.Game
 import com.example.projet_android.ui.components.headers.SectionHeader
 import com.example.projet_android.ui.components.lists.GameScrollableList
+import com.example.projet_android.ui.components.texts.BasicText
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 import java.util.Date
 
@@ -28,13 +29,17 @@ fun GameListContent(
         modifier = modifier.fillMaxWidth()
     ) {
         SectionHeader(sectionName, Modifier.padding(horizontal = 15.dp))
-        GameScrollableList(
-            games,
-            onGameClick = onGameClick,
-            Modifier
-                .padding(horizontal = 15.dp)
-                .heightIn(min = 100.dp, max = 300.dp)
-        )
+        if (games.isEmpty()) {
+            BasicText("No games found...", Modifier.fillMaxWidth())
+        } else {
+            GameScrollableList(
+                games,
+                onGameClick = onGameClick,
+                Modifier
+                    .padding(horizontal = 15.dp)
+                    .heightIn(min = 100.dp, max = 250.dp)
+            )
+        }
     }
 }
 
@@ -51,5 +56,14 @@ fun GameListPreview() {
             Game("5","Partie avec un titre très long qui devrait être tronqué", Date())
         )
         GameListContent("Admin", games, onGameClick = {})
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview(showBackground = true)
+@Composable
+fun EmptyGameListPreview() {
+    ProjetAndroidTheme {
+        GameListContent("Admin", listOf(), onGameClick = {})
     }
 }

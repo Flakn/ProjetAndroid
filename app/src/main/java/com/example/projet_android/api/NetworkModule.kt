@@ -30,4 +30,14 @@ object NetworkModule {
     fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
         return retrofit.create(AuthApiService::class.java)
     }
+
+    @Provides
+    fun provideGameApiService(retrofit: Retrofit): GameApiService {
+        return retrofit.create(GameApiService::class.java)
+    }
+
+    @Provides
+    fun providePlayerApiService(retrofit: Retrofit): PlayerApiService {
+        return retrofit.create(PlayerApiService::class.java)
+    }
 }

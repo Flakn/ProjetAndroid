@@ -21,7 +21,7 @@ class AuthViewModel @Inject constructor(
 
     fun register(username: String, email: String, password: String) {
         viewModelScope.launch {
-            _loginState.value = RequestState.Loading
+            _loginState.postValue(RequestState.Loading)
             try {
                 authRepository.register(username, email, password)
                 login(email, password)
@@ -34,7 +34,7 @@ class AuthViewModel @Inject constructor(
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
-            _loginState.value = RequestState.Loading
+            _loginState.postValue(RequestState.Loading)
             try {
                 val token = authRepository.login(email, password)
                 preferencesHelper.saveToken(token)

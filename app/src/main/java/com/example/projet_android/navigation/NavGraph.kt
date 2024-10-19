@@ -23,7 +23,6 @@ fun NavGraph(navController: NavHostController, scaffoldPadding: PaddingValues) {
             RegisterScreen(navController, scaffoldPadding)
         }
         composable(Screen.Home.route) {
-            println("test")
             HomeScreen(navController, scaffoldPadding)
         }
 //        composable(

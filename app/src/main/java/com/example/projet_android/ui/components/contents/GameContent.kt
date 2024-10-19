@@ -42,11 +42,19 @@ fun GameContent(
         SecondaryTitle(player.name, Modifier.fillMaxWidth())
 
         Spacer(modifier = Modifier.height(16.dp))
-        TertiaryTitle("Status : ${game.state.replaceFirstChar(Char::titlecase)}", Modifier.padding(horizontal = padding).fillMaxWidth())
+        TertiaryTitle(
+            "Status : ${game.status.replaceFirstChar(Char::titlecase)}",
+            Modifier
+                .padding(horizontal = padding)
+                .fillMaxWidth()
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
-        TertiaryTitle("Description :", Modifier.padding(horizontal = padding).fillMaxWidth())
-        BasicText(game.description, maxLines = 8, modifier = Modifier.padding(horizontal = padding))
+        TertiaryTitle("Description :",
+            Modifier
+                .padding(horizontal = padding)
+                .fillMaxWidth())
+        BasicText(game.getSafeDescription(), maxLines = 8, modifier = Modifier.padding(horizontal = padding))
 
         Spacer(modifier = Modifier.height(24.dp))
         InventoryContent(

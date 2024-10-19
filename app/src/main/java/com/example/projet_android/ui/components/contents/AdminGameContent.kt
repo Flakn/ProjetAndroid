@@ -25,7 +25,7 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
 fun AdminGameContent(game: Game, scaffoldPadding: PaddingValues, modifier: Modifier = Modifier){
-    println(game.title)
+    println(game.id)
 
     // TODO: Get players using API
     var players by remember { mutableStateOf(listOf(

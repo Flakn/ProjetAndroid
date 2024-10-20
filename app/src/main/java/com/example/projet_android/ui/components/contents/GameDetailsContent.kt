@@ -1,62 +1,59 @@
 package com.example.projet_android.ui.components.contents
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.projet_android.R
 import com.example.projet_android.model.Game
 import com.example.projet_android.model.Inventory
 import com.example.projet_android.model.Item
 import com.example.projet_android.model.Player
-import com.example.projet_android.ui.components.progress.CircularProgress
+import com.example.projet_android.ui.components.texts.BasicText
+import com.example.projet_android.ui.components.titles.SecondaryTitle
+import com.example.projet_android.ui.components.titles.TertiaryTitle
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun GameContent(
-    player: Player?,
-    game: Game?,
-    scaffoldPadding: PaddingValues,
-    modifier: Modifier = Modifier,
-    isLoading: Boolean = false
+fun GameDetailsContent(
+    player: Player,
+    game: Game,
+    padding: Dp
 ){
-    val padding = 10.dp
+    SecondaryTitle(player.name, Modifier.fillMaxWidth())
 
-    Column (
-        modifier = modifier
-            .fillMaxSize()
-            .padding(scaffoldPadding)
-            .heightIn(max = 600.dp),
-        verticalArrangement = Arrangement.Center
-    ) {
-        if (player == null || game == null || isLoading) {
-            CircularProgress(Color.Black, 50.dp)
-        } else {
-            GameDetailsContent(player, game, padding)
-            Spacer(modifier = Modifier.height(24.dp))
-            InventoryContent(
-                player.inventory,
-                scaffoldPadding,
-                Modifier.padding(horizontal = padding)
-            )
-        }
-    }
+    Spacer(modifier = Modifier.height(16.dp))
+    TertiaryTitle(
+        "Status : ${game.status.replaceFirstChar(Char::titlecase)}",
+        Modifier
+            .padding(horizontal = padding)
+            .fillMaxWidth()
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
+    TertiaryTitle(
+        "Description :",
+        Modifier
+            .padding(horizontal = padding)
+            .fillMaxWidth()
+    )
+    BasicText(
+        game.getSafeDescription(),
+        maxLines = 8,
+        modifier = Modifier.padding(horizontal = padding)
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GameContentPreview() {
+fun GameDetailsContentPreview() {
     ProjetAndroidTheme {
-        GameContent(
+        GameDetailsContent(
             Player(
                 "1",
                 "TestUsername",
@@ -80,7 +77,7 @@ fun GameContentPreview() {
                         "\n" +
                         "Lorem ipsum odor amet, consectetuer adipiscing elit. Finibus blandit interdum pulvinar non nostra imperdiet ut fusce. Nam egestas primis litora taciti penatibus"
             ),
-            PaddingValues()
+            10.dp
         )
     }
 }

@@ -1,8 +1,11 @@
 package com.example.projet_android.repositories
 
 import com.example.projet_android.api.GameApiService
+import com.example.projet_android.api.dto.AddPlayerToGameRequest
 import com.example.projet_android.api.dto.GameRequest
 import com.example.projet_android.model.Game
+import com.example.projet_android.model.Inventory
+import com.example.projet_android.model.Player
 import javax.inject.Inject
 
 class GameRepository @Inject constructor(private val gameApiService: GameApiService) {
@@ -23,6 +26,35 @@ class GameRepository @Inject constructor(private val gameApiService: GameApiServ
                 description = gameResponse.description,
                 isPlayerAdmin = gameResponse.player.roleMaster
             )
+        }
+    }
+
+    suspend fun getAdminGameById(gameId: String, authToken: String): Game {
+        println(gameId)
+        println(authToken)
+        val response = gameApiService.getAdminGameById(gameId, authToken)
+        return Game(
+            id = response.id,
+            name = response.name,
+            createdAt = response.createdAt,
+            status = response.status,
+            description = response.description,
+            isPlayerAdmin = response.roleMaster,
+            players = response.players.map { responsePlayer ->
+                Player(
+                    id = responsePlayer.id,
+                    name = if (responsePlayer.status == "ACTIVE") responsePlayer.firstname else responsePlayer.user.username,
+                    inventory = Inventory()
+                )
+            }
+        )
+    }
+
+    suspend fun addPlayerToGame(gameId: String, username: String, authToken: String) {
+        val request = AddPlayerToGameRequest(username)
+        val response = gameApiService.addPlayerToGame(gameId, request, authToken)
+        if (!response.isSuccessful) {
+            throw Exception("Adding player failed: ${response.errorBody()?.string()}")
         }
     }
 }

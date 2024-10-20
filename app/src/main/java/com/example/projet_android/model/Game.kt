@@ -11,7 +11,8 @@ data class Game(
     val createdAt: Date = Date(),
     val isPlayerAdmin: Boolean = false,
     val status: String = "ACTIVE",
-    val description: String? = null
+    val description: String? = null,
+    val players: List<Player> = listOf()
 ) {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCreatedDateString(): String {

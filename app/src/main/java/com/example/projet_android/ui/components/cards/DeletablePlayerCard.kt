@@ -5,10 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,16 +19,16 @@ import com.example.projet_android.model.Player
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
 @Composable
-fun DeletablePlayerCard(player: Player, onDelete: (Player) -> Unit, modifier: Modifier = Modifier) {
+fun DeletablePlayerCard(
+    player: Player,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier.fillMaxWidth().background(Color.White),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(text = player.name, modifier = Modifier.padding(8.dp))
-        IconButton(onClick = { onDelete(player) }) {
-            Icon(imageVector = Icons.Default.Delete, contentDescription = "Remove player")
-        }
     }
 }
 
@@ -41,6 +37,6 @@ fun DeletablePlayerCard(player: Player, onDelete: (Player) -> Unit, modifier: Mo
 fun DeletablePlayerCardPreview() {
     ProjetAndroidTheme {
         val player = Player("1", "Player 1", Inventory(listOf(Item("1", "Item 1", R.drawable.bow.toString()))))
-        DeletablePlayerCard(player, {})
+        DeletablePlayerCard(player)
     }
 }

@@ -1,3 +1,11 @@
 package com.example.projet_android.model
 
-data class Item(val id: String, val name: String, val type: String, val description: String = "")
+import android.annotation.SuppressLint
+import android.content.Context
+
+data class Item(val id: String, val name: String, val type: String, val description: String = "") {
+    @SuppressLint("DiscouragedApi")
+    fun getResId(context: Context): Int {
+        return context.resources.getIdentifier(this.type, "drawable", context.packageName)
+    }
+}

@@ -34,6 +34,7 @@ class GameViewModel @Inject constructor(
                 val createdGame = gameRepository.addGame(name, token!!)
                 _createGameState.postValue(RequestState.Success(createdGame.name))
             } catch (e: Exception) {
+                println("Error adding the game")
                 e.printStackTrace()
                 _createGameState.postValue(RequestState.Error("Adding game failed"))
             }
@@ -48,6 +49,7 @@ class GameViewModel @Inject constructor(
                 _games.value = gameRepository.getGames(token!!)
                 _fetchGamesState.postValue(RequestState.Success(_games))
             } catch (e: Exception) {
+                println("Error getting games")
                 e.printStackTrace()
                 _fetchGamesState.postValue(RequestState.Error("Getting games failed"))
             }
@@ -56,9 +58,5 @@ class GameViewModel @Inject constructor(
 
     fun resetCreateGameState() {
         _createGameState.value = null
-    }
-
-    fun resetFetchGamesState() {
-        _fetchGamesState.value = null
     }
 }

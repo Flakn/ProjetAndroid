@@ -20,7 +20,6 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 @Composable
 fun PlayersList(
     players: List<Player>,
-    onDelete: (Player) -> Unit,
     modifier: Modifier = Modifier
 ){
     LazyColumn(
@@ -31,7 +30,7 @@ fun PlayersList(
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         items(players) { player ->
-            DeletablePlayerCard(player, onDelete)
+            DeletablePlayerCard(player)
         }
     }
 }
@@ -46,6 +45,6 @@ fun PlayersListPreview() {
             Player("3", "Player 3", Inventory(listOf(Item("3", "Item 3", R.drawable.crossbow.toString())))),
             Player("4", "Player 4", Inventory(listOf(Item("4", "Item 4", R.drawable.diamond.toString()))))
         )
-        PlayersList(players, {})
+        PlayersList(players)
     }
 }

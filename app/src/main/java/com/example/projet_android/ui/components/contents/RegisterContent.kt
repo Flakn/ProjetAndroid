@@ -78,7 +78,6 @@ fun RegisterContent(scaffoldPadding: PaddingValues, navController: NavHostContro
                 }
             }
             is RequestState.Error -> {
-                authViewModel.resetLoginState()
                 showShortAlert(LocalContext.current, state.message)
             }
 

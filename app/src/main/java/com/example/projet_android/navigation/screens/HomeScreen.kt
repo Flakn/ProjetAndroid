@@ -55,7 +55,6 @@ fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues)
                 gameViewModel.fetchGames()
             }
             is RequestState.Error -> {
-                gameViewModel.resetCreateGameState()
                 showShortAlert(LocalContext.current, state.message)
             }
 
@@ -66,7 +65,6 @@ fun HomeScreen(navController: NavHostController, scaffoldPadding: PaddingValues)
     fetchGamesState?.let { state ->
         when (state) {
             is RequestState.Error -> {
-                gameViewModel.resetFetchGamesState()
                 showShortAlert(LocalContext.current, state.message)
             }
 

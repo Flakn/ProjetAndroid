@@ -26,6 +26,7 @@ class AuthViewModel @Inject constructor(
                 authRepository.register(username, email, password)
                 login(email, password)
             } catch (e: Exception) {
+                println("Error registering")
                 e.printStackTrace()
                 _loginState.postValue(RequestState.Error("Register failed"))
             }
@@ -40,6 +41,7 @@ class AuthViewModel @Inject constructor(
                 preferencesHelper.saveToken(token)
                 _loginState.postValue(RequestState.Success(token))
             } catch (e: Exception) {
+                println("Error login")
                 e.printStackTrace()
                 _loginState.postValue(RequestState.Error("Login failed"))
             }

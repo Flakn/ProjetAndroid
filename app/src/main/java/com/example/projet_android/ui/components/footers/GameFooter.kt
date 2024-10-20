@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projet_android.R
+import com.example.projet_android.navigation.Screen
 import com.example.projet_android.ui.components.buttons.ImageButton
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 
@@ -37,7 +38,11 @@ fun GameFooter(navController: NavHostController, scaffoldPadding: PaddingValues,
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
-            ImageButton(R.drawable.arrow_back, "Back icon", onClick = { /*navController.navigate(Screen.Home.route)*/ })
+            ImageButton(
+                R.drawable.arrow_back,
+                "Back icon",
+                onClick = { navController.navigate(Screen.Home.route) }
+            )
         }
     }
 }

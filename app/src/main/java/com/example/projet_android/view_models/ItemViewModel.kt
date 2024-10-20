@@ -1,40 +1,35 @@
 package com.example.projet_android.view_models
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.projet_android.model.Item
+import com.example.projet_android.navigation.PreferencesHelper
 import com.example.projet_android.repositories.ItemRepository
+import com.example.projet_android.view_models.states.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ItemViewModel @Inject constructor(
-    private val repository: ItemRepository
+    private val itemRepository: ItemRepository,
+    private val preferencesHelper: PreferencesHelper
 ) : ViewModel() {
 
-    private val _items = MutableStateFlow<List<Item>>(emptyList())
-    val items: StateFlow<List<Item>> get() = _items
+    private val _fetchItemsState = MutableLiveData<RequestState?>()
+    val fetchItemsState: MutableLiveData<RequestState?> = _fetchItemsState
 
-    private val _isError = MutableStateFlow(false)
-    val isError: StateFlow<Boolean> get() = _isError
-
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> get() = _isLoading
-
-    fun fetchItems(authToken: String) {
-        _isLoading.value = true
+    fun fetchItems() {
         viewModelScope.launch {
+            _fetchItemsState.postValue(RequestState.Loading)
             try {
-                val itemsList = repository.getItems(authToken)
-                _items.value = itemsList
+                val token = preferencesHelper.getToken()
+                val items = itemRepository.getItems(token!!)
+                _fetchItemsState.postValue(RequestState.Success(items))
             } catch (e: Exception) {
+                println("Error getting all items")
                 e.printStackTrace()
-                _isError.value = true
-            } finally {
-                _isLoading.value = false
+                _fetchItemsState.postValue(RequestState.Error("Getting all items failed"))
             }
         }
     }

@@ -5,14 +5,11 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +26,7 @@ import com.example.projet_android.model.Game
 import com.example.projet_android.navigation.Screen
 import com.example.projet_android.ui.alerts.showShortAlert
 import com.example.projet_android.ui.components.modals.PlayerNameModal
+import com.example.projet_android.ui.components.progress.CircularProgress
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
 import java.util.Date
 
@@ -52,7 +50,6 @@ fun HomeContent(
             showDialog = true
         }
     }
-    println(games)
     val gamesAdmin = games.filter { it.isPlayerAdmin }
     val gamesPlayer = games.filter { !it.isPlayerAdmin }
     val context = LocalContext.current
@@ -65,12 +62,7 @@ fun HomeContent(
         verticalArrangement = Arrangement.Center
     ) {
         if (isLoading) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                CircularProgressIndicator(color = Color.Black, modifier = Modifier.size(50.dp))
-            }
+            CircularProgress(Color.Black, 50.dp)
         } else {
             GameListContent("Parties - Admin", gamesAdmin, onGameClick = onGameClick)
             Spacer(Modifier.size(20.dp))
@@ -87,6 +79,7 @@ fun HomeContent(
             if (playerName.isEmpty()) {
                 showShortAlert(context, "Please enter a valid username")
             } else {
+                // TODO: Update the player name
                 navController.navigate("${Screen.Game.route}/${clickedGame!!.id}")
             }
         }

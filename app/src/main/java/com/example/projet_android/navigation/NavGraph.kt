@@ -4,10 +4,13 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.projet_android.navigation.screens.AdminGameScreen
+import com.example.projet_android.navigation.screens.GameScreen
 import com.example.projet_android.navigation.screens.HomeScreen
 import com.example.projet_android.navigation.screens.LoginScreen
 import com.example.projet_android.navigation.screens.RegisterScreen
@@ -25,34 +28,19 @@ fun NavGraph(navController: NavHostController, scaffoldPadding: PaddingValues) {
         composable(Screen.Home.route) {
             HomeScreen(navController, scaffoldPadding)
         }
-//        composable(
-//            route = "${Screen.Game.route}/{game_id}",
-//            arguments = listOf(navArgument("game_id") { type = NavType.StringType })
-//        ) { backStackEntry ->
-//            val gameId = getGameId(backStackEntry, navController)
-//            if (gameId != null)
-//                GameScreen(gameId, navController, scaffoldPadding)
-//        }
-//        composable(
-//            route = "${Screen.AdminGame.route}/{game_id}",
-//            arguments = listOf(navArgument("game_id") { type = NavType.StringType })
-//        ) { backStackEntry ->
-//            val gameId = getGameId(backStackEntry, navController)
-//            if (gameId != null)
-//                AdminGameScreen(gameId, navController, scaffoldPadding)
-//        }
-    }
-}
-
-fun getGameId(backStackEntry: NavBackStackEntry, navController: NavHostController): String? {
-    val gameId = backStackEntry.arguments?.getString("game_id")
-
-    if (gameId.isNullOrEmpty()) {
-//        navController.navigate(Screen.Home.route) {
-//            popUpTo(Screen.Home.route) { inclusive = true }
-//        }
-        return null
-    } else {
-        return gameId
+        composable(
+            route = "${Screen.Game.route}/{game_id}",
+            arguments = listOf(navArgument("game_id") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val gameId = backStackEntry.arguments?.getString("game_id")
+            GameScreen(gameId ?: "", navController, scaffoldPadding)
+        }
+        composable(
+            route = "${Screen.AdminGame.route}/{game_id}",
+            arguments = listOf(navArgument("game_id") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val gameId = backStackEntry.arguments?.getString("game_id")
+            AdminGameScreen(gameId ?: "", navController, scaffoldPadding)
+        }
     }
 }

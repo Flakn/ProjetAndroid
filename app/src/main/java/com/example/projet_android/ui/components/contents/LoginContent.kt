@@ -73,7 +73,6 @@ fun LoginContent(scaffoldPadding: PaddingValues, navController: NavHostControlle
                 }
             }
             is RequestState.Error -> {
-                authViewModel.resetLoginState()
                 showShortAlert(LocalContext.current, state.message)
             }
 

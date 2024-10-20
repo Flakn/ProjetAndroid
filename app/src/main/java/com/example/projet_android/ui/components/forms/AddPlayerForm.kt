@@ -18,7 +18,11 @@ import com.example.projet_android.ui.components.buttons.ValidateButton
 import com.example.projet_android.ui.components.inputs.TextInput
 
 @Composable
-fun AddPlayerForm(onNewPlayer: (Player) -> Unit, modifier: Modifier = Modifier) {
+fun AddPlayerForm(
+    onNewPlayer: (Player) -> Unit,
+    modifier: Modifier = Modifier,
+    isPlayerAdding: Boolean = false
+) {
     var playerName by remember { mutableStateOf("") }
 
     Row(
@@ -40,7 +44,8 @@ fun AddPlayerForm(onNewPlayer: (Player) -> Unit, modifier: Modifier = Modifier) 
                     onNewPlayer(Player(id="1", playerName, Inventory(listOf())))
                     playerName = ""
                 }
-            }
+            },
+            isLoading = isPlayerAdding
         )
     }
 }

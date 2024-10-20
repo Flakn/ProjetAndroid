@@ -29,6 +29,28 @@ class GameRepository @Inject constructor(private val gameApiService: GameApiServ
         }
     }
 
+    suspend fun getGameInfoById(gameId: String, authToken: String): Pair<Game, Player> {
+        val response = gameApiService.getGames(authToken)
+        val gameResponse = response.find { it.id == gameId }
+        if (gameResponse == null)
+            throw Exception("Could not find the wished game")
+        val playerResponse = gameResponse.player
+        val game = Game(
+            id = gameResponse.id,
+            name = gameResponse.name,
+            createdAt = gameResponse.createdAt,
+            status = gameResponse.status,
+            description = gameResponse.description,
+            isPlayerAdmin = gameResponse.player.roleMaster
+        )
+        val player = Player(
+            id = playerResponse.id,
+            name = if (playerResponse.status == "ACTIVE") playerResponse.firstname else playerResponse.user.username,
+            inventory = Inventory()
+        )
+        return Pair(game, player)
+    }
+
     suspend fun getAdminGameById(gameId: String, authToken: String): Game {
         println(gameId)
         println(authToken)

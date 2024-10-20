@@ -25,12 +25,15 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 fun GameContent(
     player: Player?,
     game: Game?,
+    useItem: (Item) -> Unit,
     scaffoldPadding: PaddingValues,
     modifier: Modifier = Modifier,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    isAddingItem: Boolean = false
 ){
     val padding = 10.dp
 
+    // TODO: Use the same way as GameScreen
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -45,8 +48,10 @@ fun GameContent(
             Spacer(modifier = Modifier.height(24.dp))
             InventoryContent(
                 player.inventory,
+                useItem = useItem,
                 scaffoldPadding,
-                Modifier.padding(horizontal = padding)
+                Modifier.padding(horizontal = padding),
+                isAddingItem = isAddingItem
             )
         }
     }
@@ -80,6 +85,7 @@ fun GameContentPreview() {
                         "\n" +
                         "Lorem ipsum odor amet, consectetuer adipiscing elit. Finibus blandit interdum pulvinar non nostra imperdiet ut fusce. Nam egestas primis litora taciti penatibus"
             ),
+            {},
             PaddingValues()
         )
     }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.projet_android.model.Game
@@ -28,6 +30,8 @@ import com.example.projet_android.ui.alerts.showShortAlert
 import com.example.projet_android.ui.components.modals.PlayerNameModal
 import com.example.projet_android.ui.components.progress.CircularProgress
 import com.example.projet_android.ui.theme.ProjetAndroidTheme
+import com.example.projet_android.view_models.JoinPlayerViewModel
+import com.example.projet_android.view_models.states.RequestState
 import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -39,6 +43,9 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false
 ){
+    val joinViewModel: JoinPlayerViewModel = hiltViewModel()
+    val updatePlayerState by joinViewModel.updatePlayerState.observeAsState()
+
     var showDialog by remember { mutableStateOf(false) }
     var clickedGame by remember { mutableStateOf<Game?>(null) }
 
@@ -79,11 +86,26 @@ fun HomeContent(
             if (playerName.isEmpty()) {
                 showShortAlert(context, "Please enter a valid username")
             } else {
-                // TODO: Update the player name
-                navController.navigate("${Screen.Game.route}/${clickedGame!!.id}")
+                joinViewModel.updatePlayerName(clickedGame!!.id, playerName)
             }
-        }
+        },
+        isLoading = updatePlayerState is RequestState.Loading
     )
+
+    updatePlayerState?.let { state ->
+        when (state) {
+            is RequestState.Success<*> -> {
+                joinViewModel.resetUpdatePlayerState()
+                navController.navigate("${Screen.Game.route}/${state.data}")
+            }
+
+            is RequestState.Error -> {
+                showShortAlert(LocalContext.current, state.message)
+            }
+
+            else -> {}
+        }
+    }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

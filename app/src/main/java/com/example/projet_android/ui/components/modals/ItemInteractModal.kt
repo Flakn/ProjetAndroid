@@ -15,7 +15,8 @@ fun ItemInteractModal(
     showDialog: Boolean,
     item: Item?,
     onDismiss: () -> Unit = {},
-    onConfirm: () -> Unit = {}
+    onConfirm: () -> Unit = {},
+    isAddingItem: Boolean = false
 ) {
     if (showDialog) {
         AlertDialog(
@@ -27,10 +28,14 @@ fun ItemInteractModal(
                 Text(text = "Do you want to use ${item?.name} ?")
             },
             confirmButton = {
-                ValidateButton("Yes", onClick = {
-                    onConfirm()
-                    onDismiss()
-                })
+                ValidateButton(
+                    text = "Yes",
+                    onClick = {
+                        onConfirm()
+                        onDismiss()
+                    },
+                    isLoading = isAddingItem
+                )
             },
             dismissButton = {
                 OutlineButton("No", onClick = onDismiss)
@@ -43,6 +48,6 @@ fun ItemInteractModal(
 @Composable
 fun ItemInteractModalPreview() {
     ProjetAndroidTheme {
-        ItemInteractModal(true, Item("1", "TestItem", R.drawable.bow.toString())) { }
+        ItemInteractModal(true, Item("1", "TestItem", R.drawable.bow.toString()))
     }
 }

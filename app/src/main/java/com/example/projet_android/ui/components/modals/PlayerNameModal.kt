@@ -18,7 +18,8 @@ package com.example.projet_android.ui.components.modals
 fun PlayerNameModal(
     showDialog: Boolean,
     onDismiss: () -> Unit = {},
-    onConfirm: (String) -> Unit = {}
+    onConfirm: (String) -> Unit = {},
+    isLoading: Boolean = false
 ) {
     var playerName by remember { mutableStateOf("") }
 
@@ -34,10 +35,14 @@ fun PlayerNameModal(
                 }
             },
             confirmButton = {
-                ValidateButton("Confirm", onClick = {
-                    onConfirm(playerName)
-                    onDismiss()
-                })
+                ValidateButton(
+                    text = "Confirm",
+                    onClick = {
+                        onConfirm(playerName)
+                        onDismiss()
+                    },
+                    isLoading = isLoading
+                )
             },
             dismissButton = {
                 OutlineButton("Cancel", onClick = onDismiss)
@@ -50,6 +55,6 @@ fun PlayerNameModal(
 @Composable
 fun PlayerNameModalPreview() {
     ProjetAndroidTheme {
-        PlayerNameModal(true) { }
+        PlayerNameModal(true)
     }
 }

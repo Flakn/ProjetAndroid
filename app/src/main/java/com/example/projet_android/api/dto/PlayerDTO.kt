@@ -2,6 +2,10 @@ package com.example.projet_android.api.dto
 
 import com.example.projet_android.model.Item
 
+data class UpdatePlayerRequest(
+    val firstname: String
+)
+
 data class PlayerResponse(
     val id: String,
     val roleMaster: Boolean,
@@ -30,4 +34,8 @@ data class InventoryResponse(
 
 data class CreateInventoryResponse(
     val id: String
+)
+
+data class DeleteResponse(
+    val affected: Int
 )

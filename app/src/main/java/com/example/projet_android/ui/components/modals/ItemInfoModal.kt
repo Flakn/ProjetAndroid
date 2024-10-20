@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +29,8 @@ fun ItemInfoModal(
     onDismiss: () -> Unit = {},
     onConfirm: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+
     if (showDialog) {
         AlertDialog(
             onDismissRequest = onDismiss,
@@ -37,7 +40,7 @@ fun ItemInfoModal(
                     modifier = Modifier.padding(bottom = 8.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = item!!.type.toInt()),
+                        painter = painterResource(id = item!!.getResId(context)),
                         contentDescription = item.type,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.padding(4.dp).size(50.dp)

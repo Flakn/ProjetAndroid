@@ -22,8 +22,10 @@ import com.example.projet_android.ui.theme.ProjetAndroidTheme
 @Composable
 fun InventoryContent(
     inventory: Inventory,
+    useItem: (Item) -> Unit,
     scaffoldPadding: PaddingValues,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isAddingItem: Boolean = false
 ){
     var showDialog by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf<Item?>(null) }
@@ -47,10 +49,8 @@ fun InventoryContent(
         showDialog,
         selectedItem,
         onDismiss = { showDialog = false },
-        onConfirm = {
-            // TODO: Use the item with API
-            println(selectedItem?.name)
-        }
+        onConfirm = { useItem(selectedItem!!) },
+        isAddingItem = isAddingItem
     )
 }
 
@@ -68,6 +68,7 @@ fun InventoryContentPreview() {
                     Item("5", "Item 5", R.drawable.information.toString()),
                 )
             ),
+            {},
             PaddingValues()
         )
     }

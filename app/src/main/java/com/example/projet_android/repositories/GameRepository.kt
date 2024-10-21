@@ -52,8 +52,6 @@ class GameRepository @Inject constructor(private val gameApiService: GameApiServ
     }
 
     suspend fun getAdminGameById(gameId: String, authToken: String): Game {
-        println(gameId)
-        println(authToken)
         val response = gameApiService.getAdminGameById(gameId, authToken)
         return Game(
             id = response.id,
